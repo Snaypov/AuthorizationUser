@@ -42,11 +42,8 @@
             echo "<h2>Логил или пароль введен не правильно.</h2>";
         }
     }
-    if(isset($_GET['exit'])){
-        if($_GET['exit'] == 1){
-            $auth->logOut();
-            header("Location: ?exit=0");
-        }
+    if(isset($_POST['logout'])){
+        $auth->logOut();
     }
 
 
@@ -63,14 +60,19 @@
     <?php
         if($auth->isUserAuth()){
             echo "Здравствуйте " . $auth->getUserLogin();
-            echo "<br><a href='?exit=1'>Выйти</a>";
+            echo "
+                <form action='' method='post'>
+                    <input type='hidden' name='logout' value='1'>
+                    <button type='submit'>Выйти</button>
+                </form>
+            ";
         }
         else{
     ?>
     <form action="" method="post">
         <input type="text" name="login" placeholder="Введите ваш логин">
         <input type="password" name="password" placeholde="Введите ваш пароль">
-        <button type="submit">Ввойти</button>
+        <button type="submit">Войти</button>
     </form>
     <?php
     }
